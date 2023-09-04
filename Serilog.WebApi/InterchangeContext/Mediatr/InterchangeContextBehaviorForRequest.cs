@@ -1,4 +1,5 @@
 ﻿using MediatR;
+using Serilog.WebApi.InterchangeContext.Dto;
 using Serilog.WebApi.InterchangeContext.Services;
 using System.Diagnostics;
 using System.Reflection;

@@ -3,12 +3,13 @@ using Serilog.WebApi.Serilog.Extensions;
 using Serilog.WebApi.Serilog.Wrappers;
 using Serilog.WebApi.Serilog.Loggers;
 using Serilog.WebApi.InterchangeContext.Services;
-using Serilog.WebApi.InterchangeContext;
 using Serilog.WebApi.Controllers.WeatherForecast.Dto;
 using Serilog.WebApi.Controllers.WeatherForecast.ContextPublishers;
 using Serilog.WebApi.InterchangeContext.Mediatr;
 using Serilog.WebApi.Controllers.WeatherForecast.Mediatr;
 using Serilog.WebApi.Controllers.WeatherForecast.LogClasses;
+using Serilog.WebApi.InterchangeContext.Extensions;
+using Serilog.WebApi.Controllers.WeatherForecast.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 

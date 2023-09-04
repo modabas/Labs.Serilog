@@ -1,6 +1,7 @@
-﻿using Serilog.WebApi.Controllers.WeatherForecast.Mediatr;
+﻿using Serilog.WebApi.Controllers.WeatherForecast.Dto;
+using Serilog.WebApi.Controllers.WeatherForecast.Mediatr;
 
-namespace Serilog.WebApi.Controllers.WeatherForecast.Dto;
+namespace Serilog.WebApi.Controllers.WeatherForecast.Extensions;
 
 public static class WeatherForecastExtensions
 {

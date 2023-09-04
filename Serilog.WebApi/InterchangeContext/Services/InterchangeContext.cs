@@ -1,4 +1,6 @@
-﻿namespace Serilog.WebApi.InterchangeContext.Services;
+﻿using Serilog.WebApi.InterchangeContext.Dto;
+
+namespace Serilog.WebApi.InterchangeContext.Services;
 
 public class InterchangeContext : IInterchangeContext
 {

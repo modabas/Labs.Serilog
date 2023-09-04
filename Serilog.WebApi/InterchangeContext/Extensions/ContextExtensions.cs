@@ -1,6 +1,6 @@
 ﻿using Serilog.WebApi.InterchangeContext.Services;
 
-namespace Serilog.WebApi.InterchangeContext;
+namespace Serilog.WebApi.InterchangeContext.Extensions;
 
 public static class ContextExtensions
 {

@@ -31,12 +31,13 @@ public class DataExchangeLogger<TCaller> : IDataExchangeLogger<TCaller>
         }
     }
 
-    public async Task LogError(Exception? exception, string? message, params object?[] args)
+    public Task LogError(Exception? exception, string? message, params object?[] args)
     {
         using (_logger.BeginScope("{IsDataExchangeLog}", true))
         {
             _logger.LogError(exception, message, args);
         }
+        return Task.CompletedTask;
     }
 
 }

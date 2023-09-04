@@ -1,4 +1,4 @@
-﻿namespace Serilog.WebApi.InterchangeContext;
+﻿namespace Serilog.WebApi.InterchangeContext.Dto;
 
 public class ContextProperty
 {
