@@ -89,14 +89,6 @@ public class InterchangeContext : IInterchangeContext
         return Task.CompletedTask;
     }
 
-    public Task<ContextProperty?> GetPropertyWithName(string propertyName, CancellationToken cancellationToken)
-    {
-        CheckContextCreated();
-        //Null checked in CheckMessageContextCreated
-        var ret = Context!.PropertyBag.GetValueOrDefault(propertyName);
-        return Task.FromResult(ret);
-    }
-
     public Task<IEnumerable<ContextProperty>> GetPropertiesForContentLog(CancellationToken cancellationToken)
     {
         CheckContextCreated();
@@ -115,10 +107,5 @@ public class InterchangeContext : IInterchangeContext
     {
         if (IsCreated)
             throw new ApplicationException("MessageContext has already been created.");
-    }
-
-    public async Task SetProperty(string name, object? value, CancellationToken cancellationToken)
-    {
-        await SetProperty(new ContextProperty() { Name = name, Value = value, WriteToContentLog = true }, cancellationToken);
     }
 }

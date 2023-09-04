@@ -6,7 +6,7 @@ namespace Serilog.WebApi.Controllers.WeatherForecast.ContextPublishers;
 
 public class WeatherForecastDtoArrayPopulator : AbstractPropertyPopulator<WeatherForecastDto[]>
 {
-    public override Task AddProperties(WeatherForecastDto[] instance, CancellationToken cancellationToken)
+    public override Task SetProperties(WeatherForecastDto[] instance, CancellationToken cancellationToken)
     {
         var propertyBag = new List<SampleMessageItem>();
         for (var i = 0; i < 10; i++)
@@ -14,7 +14,7 @@ public class WeatherForecastDtoArrayPopulator : AbstractPropertyPopulator<Weathe
             propertyBag.Add(new SampleMessageItem() { Id = i, Name = $"Data{i:00}" });
         }
 
-        AddProperty("ManuallyPopulatedProperties", propertyBag);
+        SetProperty("ManuallyPopulatedProperties", propertyBag);
         return Task.CompletedTask;
     }
 }

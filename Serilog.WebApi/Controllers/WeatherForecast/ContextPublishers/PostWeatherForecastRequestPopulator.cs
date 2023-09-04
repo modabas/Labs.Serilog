@@ -5,10 +5,10 @@ namespace Serilog.WebApi.Controllers.WeatherForecast.ContextPublishers;
 
 public class PostWeatherForecastRequestPopulator : AbstractPropertyPopulator<PostWeatherForecastRequest>
 {
-    public override Task AddProperties(PostWeatherForecastRequest instance, CancellationToken cancellationToken)
+    public override Task SetProperties(PostWeatherForecastRequest instance, CancellationToken cancellationToken)
     {
-        AddProperty("Summary", instance.WeatherForecast?.Summary);
-        AddProperty("TemperatureC", instance.WeatherForecast?.TemperatureC);
+        SetProperty("Summary", instance.WeatherForecast?.Summary);
+        SetProperty("TemperatureC", instance.WeatherForecast?.TemperatureC);
         return Task.CompletedTask;
     }
 }

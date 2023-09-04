@@ -43,6 +43,11 @@ public class InterchangeContextBehaviorForResponse<TRequest, TResponse> : IPipel
         if (instance is null)
             return;
         var instanceType = instance.GetType();
+        
+        //if no response type for mediator handler (only returns Task)
+        if (instanceType == typeof(MediatR.Unit))
+            return;
+
         var populatorType = typeof(IInterchangeContextPropertyPopulator<>).MakeGenericType(instanceType);
         if (populatorType is null)
         {
@@ -56,7 +61,7 @@ public class InterchangeContextBehaviorForResponse<TRequest, TResponse> : IPipel
 
         var createPropertiesTask = (Task?)populatorType
             .GetTypeInfo()
-            .GetMethod("AddProperties")?
+            .GetMethod("SetProperties")?
             .Invoke(populator, new object[] { instance, cancellationToken });
         if (createPropertiesTask is null)
         {

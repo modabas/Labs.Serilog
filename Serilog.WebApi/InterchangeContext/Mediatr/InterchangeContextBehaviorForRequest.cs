@@ -53,7 +53,7 @@ public class InterchangeContextBehaviorForRequest<TRequest, TResponse> : IPipeli
 
         var createPropertiesTask = (Task?)populatorType
             .GetTypeInfo()
-            .GetMethod("AddProperties")?
+            .GetMethod("SetProperties")?
             .Invoke(populator, new object[] { instance, cancellationToken });
         if (createPropertiesTask is null)
         {

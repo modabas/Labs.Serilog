@@ -3,5 +3,5 @@
 public interface IInterchangeContextPropertyPopulator<T>
 {
     Task<IEnumerable<ContextProperty>> GetProperties(T instance, CancellationToken cancellationToken);
-    Task AddProperties(T instance, CancellationToken cancellationToken);
+    Task SetProperties(T instance, CancellationToken cancellationToken);
 }
