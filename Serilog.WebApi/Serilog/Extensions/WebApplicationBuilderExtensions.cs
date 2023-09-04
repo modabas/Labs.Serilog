@@ -13,7 +13,7 @@ public static class WebApplicationBuilderExtensions
             .Enrich.FromLogContext()
             .Enrich.WithMachineName()
             .Enrich.WithEnvironmentName()
-            .WriteTo.Logger(c => c.Filter.ByIncludingOnly(Matching.WithProperty("IsAuditLog"))
+            .WriteTo.Logger(c => c.Filter.ByIncludingOnly(Matching.WithProperty("IsDataExchangeLog"))
                 .WriteTo.Console(formatter: new CompactJsonFormatter(new JsonValueFormatter(null))))
             .WriteTo.Logger(c => c.Filter.ByIncludingOnly(Matching.WithProperty("IsArchiveLog"))
                 .WriteTo.File(new CompactJsonFormatter(new JsonValueFormatter(null)), "compact_logs.json"));

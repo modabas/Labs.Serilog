@@ -3,12 +3,12 @@ using Serilog.WebApi.InterchangeContext.Services;
 
 namespace Serilog.WebApi.Controllers.WeatherForecast.ContextPublishers;
 
-public class PostWeatherForecastRequestPublisher : AbstractPublisher<PostWeatherForecastRequest>
+public class PostWeatherForecastRequestPublisher : AbstractPropertyPopulator<PostWeatherForecastRequest>
 {
-    public override Task CreatePromotions(PostWeatherForecastRequest instance, CancellationToken cancellationToken)
+    public override Task AddProperties(PostWeatherForecastRequest instance, CancellationToken cancellationToken)
     {
-        CreatePromotion("Summary", instance.WeatherForecast?.Summary);
-        CreatePromotion("TemperatureC", instance.WeatherForecast?.TemperatureC);
+        AddProperty("Summary", instance.WeatherForecast?.Summary);
+        AddProperty("TemperatureC", instance.WeatherForecast?.TemperatureC);
         return Task.CompletedTask;
     }
 }

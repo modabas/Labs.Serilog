@@ -117,7 +117,7 @@ public class InterchangeContext : IInterchangeContext
             throw new ApplicationException("MessageContext has already been created.");
     }
 
-    public async Task PublishProperty(string name, object? value, CancellationToken cancellationToken)
+    public async Task SetProperty(string name, object? value, CancellationToken cancellationToken)
     {
         await SetProperty(new ContextProperty() { Name = name, Value = value, WriteToContentLog = true }, cancellationToken);
     }

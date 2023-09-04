@@ -41,38 +41,38 @@ public class InterchangeContextFilter : IAsyncActionFilter
         if (instance is null)
             return;
         var instanceType = instance.GetType();
-        var publisherType = typeof(IContextPublisher<>).MakeGenericType(instanceType);
-        if (publisherType is null)
+        var populatorType = typeof(IInterchangeContextPropertyPopulator<>).MakeGenericType(instanceType);
+        if (populatorType is null)
         {
             return;
         }
-        var publisher = httpContext.RequestServices.GetService(publisherType);
-        if (publisher is null)
+        var populator = httpContext.RequestServices.GetService(populatorType);
+        if (populator is null)
         {
             return;
         }
 
-        var createPromotionsTask = (Task?)publisherType
+        var createPropertiesTask = (Task?)populatorType
             .GetTypeInfo()
-            .GetMethod("CreatePromotions")?
-            .Invoke(publisher, new object[] { instance, cancellationToken });
-        if (createPromotionsTask is null)
+            .GetMethod("AddProperties")?
+            .Invoke(populator, new object[] { instance, cancellationToken });
+        if (createPropertiesTask is null)
         {
             return;
         }
-        await createPromotionsTask;
+        await createPropertiesTask;
 
-        var getPromotionsTask = (Task<IEnumerable<ContextProperty>>?)publisherType
+        var getPropertiesTask = (Task<IEnumerable<ContextProperty>>?)populatorType
             .GetTypeInfo()
-            .GetMethod("GetPromotions")?
-            .Invoke(publisher, new object[] { instance, cancellationToken });
-        if (getPromotionsTask is null)
+            .GetMethod("GetProperties")?
+            .Invoke(populator, new object[] { instance, cancellationToken });
+        if (getPropertiesTask is null)
         {
             return;
         }
-        foreach (var promotion in await getPromotionsTask)
+        foreach (var property in await getPropertiesTask)
         {
-            await _interchangeContext.SetProperty(promotion, cancellationToken);
+            await _interchangeContext.SetProperty(property, cancellationToken);
         }
     }
 }

@@ -14,10 +14,10 @@ public partial class WeatherForecastController : ControllerBase
         "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
     };
 
-    private readonly IAuditLogger<WeatherForecastController> _auditLogger;
+    private readonly IDataExchangeLogger<WeatherForecastController> _auditLogger;
     private readonly IInterchangeContext _interchangeContext;
 
-    public WeatherForecastController(IAuditLogger<WeatherForecastController> auditLogger, IInterchangeContext interchangeContext)
+    public WeatherForecastController(IDataExchangeLogger<WeatherForecastController> auditLogger, IInterchangeContext interchangeContext)
     {
         _auditLogger = auditLogger;
         _interchangeContext = interchangeContext;
@@ -42,7 +42,7 @@ public partial class WeatherForecastController : ControllerBase
                 propertyBag.Add(new SampleMessageItem() { Id = i, Name = $"Data{i:00}" });
             }
 
-            await _interchangeContext.PublishProperty("PropertyBag", propertyBag, cancellationToken);
+            await _interchangeContext.SetProperty("ManuallyPopulatedProperties", propertyBag, cancellationToken);
             await _auditLogger.LogInformation(forecast, cancellationToken);
 
             return forecast;

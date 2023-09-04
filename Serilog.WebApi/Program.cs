@@ -16,13 +16,13 @@ var builder = WebApplication.CreateBuilder(args);
 builder.AddSerilogLoggers((ctx, lc) =>
 {
     lc
-    .Destructure.ByWrappingAndTransforming<AuditLogWrapper<WeatherForecastDto[]>, WeatherForecastDto[]>(x => x.ToAuditLog())
-    .Destructure.ByWrappingAndTransforming<AuditLogWrapper<SampleMessage>, SampleMessage>(x => x.ToAuditLog())
+    .Destructure.ByWrappingAndTransforming<DataExchangeLogWrapper<WeatherForecastDto[]>, WeatherForecastDto[]>(x => x.ToAuditLog())
+    .Destructure.ByWrappingAndTransforming<DataExchangeLogWrapper<SampleMessage>, SampleMessage>(x => x.ToAuditLog())
     .Destructure.ByWrappingAndTransforming<ArchiveLogWrapper<SampleMessage>, SampleMessage>(x => x.ToArchiveLog());
 });
-builder.Services.AddTransient(typeof(IAuditLogger<>), typeof(AuditLogger<>));
+builder.Services.AddTransient(typeof(IDataExchangeLogger<>), typeof(DataExchangeLogger<>));
 builder.Services.AddSingleton<IInterchangeContext, InterchangeContext>();
-builder.Services.AddPublisher<PostWeatherForecastRequestPublisher>();
+builder.Services.AddPropertyPopulator<PostWeatherForecastRequestPublisher>();
 
 builder.Services.AddControllers(options =>
 {

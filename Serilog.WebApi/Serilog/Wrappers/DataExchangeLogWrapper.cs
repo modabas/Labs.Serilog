@@ -2,15 +2,15 @@
 
 namespace Serilog.WebApi.Serilog.Wrappers;
 
-internal class AuditLogWrapper<T> : ILogWrapper<T>
+internal class DataExchangeLogWrapper<T> : ILogWrapper<T>
 {
     public T? Log { get; set; }
 
-    public AuditLogWrapper()
+    public DataExchangeLogWrapper()
     {
     }
 
-    public AuditLogWrapper(T log)
+    public DataExchangeLogWrapper(T log)
     {
         Log = log;
     }
