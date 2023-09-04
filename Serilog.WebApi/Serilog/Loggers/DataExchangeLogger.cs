@@ -18,9 +18,12 @@ public class DataExchangeLogger<TCaller> : IDataExchangeLogger<TCaller>
     {
         using (_logger.BeginScope("{IsDataExchangeLog}", true))
         {
-            var properties = await _interchangeContext.GetPropertiesForContentLog(cancellationToken);
-            var propertyBag = properties.ToDictionary(p => p.Name, p => p.Value);
-            var interchangeContextData = new Dictionary<string, object?>() { { "OperationType", _interchangeContext.OpType }, { "Properties", propertyBag } };
+            var interchangeContextData = new Dictionary<string, object?>() 
+            { 
+                { "OperationType", _interchangeContext.OpType }, 
+                { "Id", _interchangeContext.Id }, 
+                { "Properties", (await _interchangeContext.GetPropertiesForContentLog(cancellationToken)).ToDictionary(p => p.Name, p => p.Value) } 
+            };
             using (_logger.BeginScope(new Dictionary<string, object?>() { { "@InterchangeContext", interchangeContextData } }))
             {
                 _logger.LogInformation("{@LogContent}", new DataExchangeLogWrapper<TLogContent>(logContent));

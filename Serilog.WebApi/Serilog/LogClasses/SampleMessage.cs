@@ -16,7 +16,7 @@ public class SampleMessageItem
 
 public static class SampleMessageExtensions
 {
-    public static SampleMessage ToAuditLog(this SampleMessage content)
+    public static SampleMessage ToDataExchangeLog(this SampleMessage content)
     {
         return new SampleMessage
         {

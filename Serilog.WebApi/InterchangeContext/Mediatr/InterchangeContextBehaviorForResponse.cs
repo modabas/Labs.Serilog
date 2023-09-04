@@ -5,12 +5,12 @@ using System.Reflection;
 
 namespace Serilog.WebApi.InterchangeContext.Mediatr;
 
-public class InterchangeContextBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : notnull
+public class InterchangeContextBehaviorForResponse<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : notnull
 {
     private readonly IInterchangeContext _interchangeContext;
     private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public InterchangeContextBehavior(IInterchangeContext interchangeContext, IHttpContextAccessor httpContextAccessor)
+    public InterchangeContextBehaviorForResponse(IInterchangeContext interchangeContext, IHttpContextAccessor httpContextAccessor)
     {
         _interchangeContext = interchangeContext;
         _httpContextAccessor = httpContextAccessor;
@@ -20,14 +20,17 @@ public class InterchangeContextBehavior<TRequest, TResponse> : IPipelineBehavior
     {
         var httpContext = _httpContextAccessor.HttpContext;
         ArgumentNullException.ThrowIfNull(httpContext, "HttpContext");
+
+        var response = await next();
+
         if (!_interchangeContext.IsCreated)
         {
             string interchangeId = GetInterchangeId(httpContext);
             await _interchangeContext.Create(interchangeId, typeof(TRequest).FullName ?? string.Empty, cancellationToken);
         }
-        await PopulateContextProperties(httpContext, request, cancellationToken);
+        await PopulateContextProperties(httpContext, response, cancellationToken);
 
-        return await next();
+        return response;
     }
 
     private string GetInterchangeId(HttpContext context)
@@ -35,7 +38,7 @@ public class InterchangeContextBehavior<TRequest, TResponse> : IPipelineBehavior
         return Activity.Current?.Id ?? context.TraceIdentifier;
     }
 
-    private async Task PopulateContextProperties(HttpContext httpContext, TRequest instance, CancellationToken cancellationToken)
+    private async Task PopulateContextProperties(HttpContext httpContext, TResponse instance, CancellationToken cancellationToken)
     {
         if (instance is null)
             return;

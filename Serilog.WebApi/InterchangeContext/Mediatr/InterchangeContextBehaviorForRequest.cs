@@ -1,34 +1,33 @@
-﻿using Microsoft.AspNetCore.Mvc.Filters;
+﻿using MediatR;
+using Serilog.WebApi.InterchangeContext.Services;
 using System.Diagnostics;
 using System.Reflection;
-using Serilog.WebApi.InterchangeContext.Services;
 
-namespace Serilog.WebApi.InterchangeContext.Filters;
-public class InterchangeContextFilter : IAsyncActionFilter
+namespace Serilog.WebApi.InterchangeContext.Mediatr;
+
+public class InterchangeContextBehaviorForRequest<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : notnull
 {
-
     private readonly IInterchangeContext _interchangeContext;
+    private readonly IHttpContextAccessor _httpContextAccessor;
 
-    public InterchangeContextFilter(IInterchangeContext interchangeContext)
+    public InterchangeContextBehaviorForRequest(IInterchangeContext interchangeContext, IHttpContextAccessor httpContextAccessor)
     {
         _interchangeContext = interchangeContext;
+        _httpContextAccessor = httpContextAccessor;
     }
 
-    public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
+    public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
     {
-
-        var cancellationToken = context.HttpContext.RequestAborted;
+        var httpContext = _httpContextAccessor.HttpContext;
+        ArgumentNullException.ThrowIfNull(httpContext, "HttpContext");
         if (!_interchangeContext.IsCreated)
         {
-            string interchangeId = GetInterchangeId(context.HttpContext);
-            await _interchangeContext.Create(interchangeId, context.ActionDescriptor.DisplayName ?? string.Empty, cancellationToken);
+            string interchangeId = GetInterchangeId(httpContext);
+            await _interchangeContext.Create(interchangeId, typeof(TRequest).FullName ?? string.Empty, cancellationToken);
         }
-        foreach (var arg in context.ActionArguments)
-        {
-            await PopulateContextProperties(context.HttpContext, arg.Value, cancellationToken);
-        }
-        await next();
+        await PopulateContextProperties(httpContext, request, cancellationToken);
 
+        return await next();
     }
 
     private string GetInterchangeId(HttpContext context)
@@ -36,7 +35,7 @@ public class InterchangeContextFilter : IAsyncActionFilter
         return Activity.Current?.Id ?? context.TraceIdentifier;
     }
 
-    private async Task PopulateContextProperties<TRequest>(HttpContext httpContext, TRequest instance, CancellationToken cancellationToken)
+    private async Task PopulateContextProperties(HttpContext httpContext, TRequest instance, CancellationToken cancellationToken)
     {
         if (instance is null)
             return;

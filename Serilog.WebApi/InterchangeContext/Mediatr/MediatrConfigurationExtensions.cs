@@ -4,9 +4,15 @@ namespace Serilog.WebApi.InterchangeContext.Mediatr;
 
 public static class MediatrConfigurationExtensions
 {
-    public static MediatRServiceConfiguration AddInterchangeContextBehavior(this MediatRServiceConfiguration configuration)
+    public static MediatRServiceConfiguration AddInterchangeContextBehaviorForRequest(this MediatRServiceConfiguration configuration)
     {
-        configuration.AddBehavior(typeof(IPipelineBehavior<,>), typeof(InterchangeContextBehavior<,>));
+        configuration.AddBehavior(typeof(IPipelineBehavior<,>), typeof(InterchangeContextBehaviorForRequest<,>));
+        return configuration;
+    }
+
+    public static MediatRServiceConfiguration AddInterchangeContextBehaviorForResponse(this MediatRServiceConfiguration configuration)
+    {
+        configuration.AddBehavior(typeof(IPipelineBehavior<,>), typeof(InterchangeContextBehaviorForResponse<,>));
         return configuration;
     }
 

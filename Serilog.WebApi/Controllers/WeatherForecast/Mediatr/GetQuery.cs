@@ -23,7 +23,7 @@ public class GetQueryHandler : IRequestHandler<GetQuery, WeatherForecastDto[]>
         _interchangeContext = interchangeContext;
     }
 
-    public async Task<WeatherForecastDto[]> Handle(GetQuery request, CancellationToken cancellationToken)
+    public Task<WeatherForecastDto[]> Handle(GetQuery request, CancellationToken cancellationToken)
     {
         //throw new InvalidOperationException("I want to log an exception");
         var forecast = Enumerable.Range(1, 5).Select(index => new WeatherForecastDto
@@ -33,14 +33,6 @@ public class GetQueryHandler : IRequestHandler<GetQuery, WeatherForecastDto[]>
             Summary = Summaries[Random.Shared.Next(Summaries.Length)]
         }).ToArray();
 
-        var propertyBag = new List<SampleMessageItem>();
-        for (var i = 0; i < 10; i++)
-        {
-            propertyBag.Add(new SampleMessageItem() { Id = i, Name = $"Data{i:00}" });
-        }
-
-        await _interchangeContext.SetProperty("ManuallyPopulatedProperties", propertyBag, cancellationToken);
-
-        return forecast;
+        return Task.FromResult(forecast);
     }
 }
