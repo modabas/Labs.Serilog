@@ -1,6 +1,6 @@
 ﻿using Serilog.WrapAndTransform;
 
-namespace Serilog.WebApi.Serilog.LogClasses;
+namespace Serilog.WebApi.Controllers.WeatherForecast.LogClasses;
 public class SampleMessage
 {
     public string Name { get; set; } = string.Empty;

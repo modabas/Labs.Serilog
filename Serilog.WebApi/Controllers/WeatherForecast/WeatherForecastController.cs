@@ -2,9 +2,6 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Serilog.WebApi.Controllers.WeatherForecast.Dto;
 using Serilog.WebApi.Controllers.WeatherForecast.Mediatr;
-using Serilog.WebApi.InterchangeContext.Services;
-using Serilog.WebApi.Serilog.LogClasses;
-using Serilog.WebApi.Serilog.Loggers;
 
 namespace Serilog.WebApi.Controllers.WeatherForecast;
 [ApiController]
