@@ -3,7 +3,7 @@ using Serilog.WebApi.InterchangeContext.Services;
 
 namespace Serilog.WebApi.Controllers.WeatherForecast.ContextPublishers;
 
-public class PostWeatherForecastRequestPublisher : AbstractPropertyPopulator<PostWeatherForecastRequest>
+public class PostWeatherForecastRequestPopulator : AbstractPropertyPopulator<PostWeatherForecastRequest>
 {
     public override Task AddProperties(PostWeatherForecastRequest instance, CancellationToken cancellationToken)
     {

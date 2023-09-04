@@ -1,8 +1,10 @@
-﻿namespace Serilog.WebApi.Controllers.WeatherForecast.Dto;
+﻿using Serilog.WebApi.Controllers.WeatherForecast.Mediatr;
+
+namespace Serilog.WebApi.Controllers.WeatherForecast.Dto;
 
 public static class WeatherForecastExtensions
 {
-    public static WeatherForecastDto ToAuditLog(this WeatherForecastDto weatherForecast)
+    public static WeatherForecastDto ToDataExchangeLog(this WeatherForecastDto weatherForecast)
     {
         return new WeatherForecastDto
         {
@@ -12,8 +14,21 @@ public static class WeatherForecastExtensions
         };
     }
 
-    public static WeatherForecastDto[] ToAuditLog(this WeatherForecastDto[] weatherForecasts)
+    public static WeatherForecastDto[] ToDataExchangeLog(this WeatherForecastDto[] weatherForecasts)
     {
-        return weatherForecasts.Select(w => w.ToAuditLog()).ToArray();
+        return weatherForecasts.Select(w => w.ToDataExchangeLog()).ToArray();
+    }
+
+    public static PostWeatherForecastRequest ToDataExchangeLog(this PostWeatherForecastRequest request)
+    {
+        return new PostWeatherForecastRequest
+        {
+            WeatherForecast = request.WeatherForecast?.ToDataExchangeLog()
+        };
+    }
+
+    public static PostCommand ToDataExchangeLog(this PostCommand command)
+    {
+        return command with { Request = command.Request.ToDataExchangeLog() };
     }
 }

@@ -1,5 +1,7 @@
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Serilog.WebApi.Controllers.WeatherForecast.Dto;
+using Serilog.WebApi.Controllers.WeatherForecast.Mediatr;
 using Serilog.WebApi.InterchangeContext.Services;
 using Serilog.WebApi.Serilog.LogClasses;
 using Serilog.WebApi.Serilog.Loggers;
@@ -9,63 +11,24 @@ namespace Serilog.WebApi.Controllers.WeatherForecast;
 [Route("[controller]")]
 public partial class WeatherForecastController : ControllerBase
 {
-    private static readonly string[] Summaries = new[]
-    {
-        "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-    };
+    private readonly IMediator _mediator;
 
-    private readonly IDataExchangeLogger<WeatherForecastController> _auditLogger;
-    private readonly IInterchangeContext _interchangeContext;
-
-    public WeatherForecastController(IDataExchangeLogger<WeatherForecastController> auditLogger, IInterchangeContext interchangeContext)
+    public WeatherForecastController(IMediator mediator)
     {
-        _auditLogger = auditLogger;
-        _interchangeContext = interchangeContext;
+        _mediator = mediator;
     }
 
     [HttpGet(Name = "GetWeatherForecast")]
-    public async Task<IEnumerable<WeatherForecastDto>> Get(CancellationToken cancellationToken)
+    public async Task<ActionResult<IEnumerable<WeatherForecastDto>>> Get(CancellationToken cancellationToken)
     {
-        try
-        {
-            //throw new InvalidOperationException("I want to log an exception");
-            var forecast = Enumerable.Range(1, 5).Select(index => new WeatherForecastDto
-            {
-                Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                TemperatureC = Random.Shared.Next(-20, 55),
-                Summary = Summaries[Random.Shared.Next(Summaries.Length)]
-            }).ToArray();
-
-            var propertyBag = new List<SampleMessageItem>();
-            for (var i = 0; i < 10; i++)
-            {
-                propertyBag.Add(new SampleMessageItem() { Id = i, Name = $"Data{i:00}" });
-            }
-
-            await _interchangeContext.SetProperty("ManuallyPopulatedProperties", propertyBag, cancellationToken);
-            await _auditLogger.LogInformation(forecast, cancellationToken);
-
-            return forecast;
-        }
-        catch (Exception ex)
-        {
-            await _auditLogger.LogError(ex, "Error while returning weather forecast.");
-            throw;
-        }
+        var ret = await _mediator.Send(new GetQuery(), cancellationToken);
+        return Ok(ret);
     }
 
     [HttpPost(Name = "PostWeatherForecast")]
     public async Task<IActionResult> Post([FromBody] PostWeatherForecastRequest request, CancellationToken cancellationToken)
     {
-        try
-        {
-            await _auditLogger.LogInformation("Post request received.", cancellationToken);
-            return Ok();
-        }
-        catch (Exception ex)
-        {
-            await _auditLogger.LogError(ex, "Error while returning weather forecast.");
-            throw;
-        }
+        await _mediator.Send(new PostCommand(request), cancellationToken);
+        return Ok();
     }
 }
