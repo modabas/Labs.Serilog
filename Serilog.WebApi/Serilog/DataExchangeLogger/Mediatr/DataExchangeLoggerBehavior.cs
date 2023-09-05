@@ -1,7 +1,7 @@
 ﻿using MediatR;
-using Serilog.WebApi.Serilog.Loggers;
+using Serilog.WebApi.Serilog.DataExchangeLogger.Loggers;
 
-namespace Serilog.WebApi.Serilog.Mediatr;
+namespace Serilog.WebApi.Serilog.DataExchangeLogger.Mediatr;
 
 public class DataExchangeLoggerBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : notnull
 {

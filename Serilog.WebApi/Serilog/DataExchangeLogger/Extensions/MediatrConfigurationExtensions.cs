@@ -1,7 +1,7 @@
 ﻿using MediatR;
-using Serilog.WebApi.Serilog.Mediatr;
+using Serilog.WebApi.Serilog.DataExchangeLogger.Mediatr;
 
-namespace Serilog.WebApi.Serilog.Extensions;
+namespace Serilog.WebApi.Serilog.DataExchangeLogger.Extensions;
 
 public static class MediatrConfigurationExtensions
 {

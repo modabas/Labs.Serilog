@@ -1,4 +1,4 @@
-﻿namespace Serilog.WebApi.Serilog.Loggers;
+﻿namespace Serilog.WebApi.Serilog.DataExchangeLogger.Loggers;
 
 public interface IDataExchangeLogger<TCaller>
 {

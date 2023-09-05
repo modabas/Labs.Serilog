@@ -1,7 +1,7 @@
 ﻿using Serilog.WebApi.InterchangeContext.Services;
-using Serilog.WebApi.Serilog.Wrappers;
+using Serilog.WebApi.Serilog.DataExchangeLogger.Wrappers;
 
-namespace Serilog.WebApi.Serilog.Loggers;
+namespace Serilog.WebApi.Serilog.DataExchangeLogger.Loggers;
 
 public class DataExchangeLogger<TCaller> : IDataExchangeLogger<TCaller>
 {

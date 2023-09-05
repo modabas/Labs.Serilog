@@ -1,6 +1,6 @@
 ﻿using Serilog.WrapAndTransform;
 
-namespace Serilog.WebApi.Serilog.Wrappers;
+namespace Serilog.WebApi.Serilog.DataExchangeLogger.Wrappers;
 
 internal class DataExchangeLogWrapper<T> : ILogWrapper<T>
 {

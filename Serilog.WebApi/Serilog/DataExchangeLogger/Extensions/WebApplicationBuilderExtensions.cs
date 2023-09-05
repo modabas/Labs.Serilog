@@ -2,13 +2,14 @@
 using Serilog.Formatting.Compact;
 using Serilog.Formatting.Json;
 
-namespace Serilog.WebApi.Serilog.Extensions;
+namespace Serilog.WebApi.Serilog.DataExchangeLogger.Extensions;
 
 public static class WebApplicationBuilderExtensions
 {
     public static WebApplicationBuilder AddSerilogLoggers(this WebApplicationBuilder builder, Action<HostBuilderContext, LoggerConfiguration> additionalLogConfiguraton)
     {
-        builder.Host.UseSerilog((ctx, lc) => {
+        builder.Host.UseSerilog((ctx, lc) =>
+        {
             lc.ReadFrom.Configuration(ctx.Configuration);
             //.Enrich.FromLogContext()
             //.Enrich.WithMachineName()
