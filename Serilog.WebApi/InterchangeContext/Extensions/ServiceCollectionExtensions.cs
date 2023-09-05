@@ -24,7 +24,7 @@ public static class ServiceCollectionExtensions
     {
         services.AddSingleton<IInterchangeContextAccessor, InterchangeContextAccessor>();
         services.AddScoped<IInterchangeContext, Services.InterchangeContext>();
-        services.AddScoped<IServiceStore, InterchangeContextServiceStore>();
+        services.AddScoped<IServiceStore, ServiceStore.ServiceStore>();
         return services;
     }
 }

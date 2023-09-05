@@ -1,15 +1,13 @@
-﻿using Serilog.WebApi.ServiceStore;
+﻿namespace Serilog.WebApi.ServiceStore;
 
-namespace Serilog.WebApi.InterchangeContext.Services;
-
-public class InterchangeContextServiceStore : IServiceStore, IDisposable, IAsyncDisposable
+public class ServiceStore : IServiceStore, IDisposable, IAsyncDisposable
 {
     private readonly IServiceScopeFactory _scopeFactory;
     private IServiceProvider? _requestServices;
     private IServiceScope? _scope;
     private bool _requestServicesSet;
 
-    public InterchangeContextServiceStore(IServiceScopeFactory scopeFactory)
+    public ServiceStore(IServiceScopeFactory scopeFactory)
     {
         _scopeFactory = scopeFactory;
     }
@@ -58,7 +56,7 @@ public class InterchangeContextServiceStore : IServiceStore, IDisposable, IAsync
 
         return default;
 
-        static async ValueTask Awaited(InterchangeContextServiceStore servicesFeature, ValueTask vt)
+        static async ValueTask Awaited(ServiceStore servicesFeature, ValueTask vt)
         {
             await vt;
             servicesFeature._scope = null;

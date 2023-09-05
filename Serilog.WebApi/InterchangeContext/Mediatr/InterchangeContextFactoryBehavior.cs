@@ -16,8 +16,11 @@ public class InterchangeContextFactoryBehavior<TRequest, TResponse> : IPipelineB
 
     public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
     {
-        _interchangeContext.OpType = typeof(TRequest).FullName ?? string.Empty;
-        _interchangeContextAccessor.InterchangeContext = _interchangeContext;
+        if (_interchangeContextAccessor.InterchangeContext is null)
+        {
+            _interchangeContext.OpType = typeof(TRequest).FullName ?? string.Empty;
+            _interchangeContextAccessor.InterchangeContext = _interchangeContext;
+        }
         return await next();
     }
 }
