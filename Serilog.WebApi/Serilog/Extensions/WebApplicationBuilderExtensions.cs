@@ -14,9 +14,7 @@ public static class WebApplicationBuilderExtensions
             //.Enrich.WithMachineName()
             //.Enrich.WithEnvironmentName()
             //.WriteTo.Logger(c => c.Filter.ByIncludingOnly(Matching.WithProperty("IsDataExchangeLog"))
-            //    .WriteTo.Console(formatter: new CompactJsonFormatter(new JsonValueFormatter(null))))
-            //.WriteTo.Logger(c => c.Filter.ByIncludingOnly(Matching.WithProperty("IsArchiveLog"))
-            //    .WriteTo.File(new CompactJsonFormatter(new JsonValueFormatter(null)), "compact_logs.json"));
+            //    .WriteTo.Console(formatter: new CompactJsonFormatter(new JsonValueFormatter(null))));
             if (additionalLogConfiguraton is not null)
             {
                 additionalLogConfiguraton(ctx, lc);

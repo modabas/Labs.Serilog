@@ -19,8 +19,7 @@ builder.AddSerilogLoggers((ctx, lc) =>
     lc
     .Destructure.ByWrappingAndTransforming<DataExchangeLogWrapper<WeatherForecastDto[]>, WeatherForecastDto[]>(x => x.ToDataExchangeLog())
     .Destructure.ByWrappingAndTransforming<DataExchangeLogWrapper<PostCommand>, PostCommand>(x => x.ToDataExchangeLog())
-    .Destructure.ByWrappingAndTransforming<DataExchangeLogWrapper<SampleMessage>, SampleMessage>(x => x.ToDataExchangeLog())
-    .Destructure.ByWrappingAndTransforming<ArchiveLogWrapper<SampleMessage>, SampleMessage>(x => x.ToArchiveLog());
+    .Destructure.ByWrappingAndTransforming<DataExchangeLogWrapper<SampleMessage>, SampleMessage>(x => x.ToDataExchangeLog());
 });
 builder.Services.AddTransient(typeof(IDataExchangeLogger<>), typeof(DataExchangeLogger<>));
 builder.Services.AddInterchangeContext();
