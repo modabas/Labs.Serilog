@@ -38,10 +38,6 @@ public class InterchangeContextPopulateResponsePropertiesBehavior<TRequest, TRes
             return;
         var instanceType = instance.GetType();
         
-        //if no response type for mediator handler (only returns Task)
-        if (instanceType == typeof(MediatR.Unit))
-            return;
-
         var populatorType = typeof(IInterchangeContextPropertyPopulator<>).MakeGenericType(instanceType);
         if (populatorType is null)
         {

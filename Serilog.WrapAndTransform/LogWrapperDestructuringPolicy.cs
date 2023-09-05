@@ -5,10 +5,10 @@ using System.Diagnostics.CodeAnalysis;
 namespace Serilog.WrapAndTransform;
 public class LogWrapperDestructuringPolicy<TLogWrapper, TLogContent> : IDestructuringPolicy where TLogWrapper : ILogWrapper<TLogContent>
 {
-    private readonly Func<TLogContent, object> _transformation;
+    private readonly Func<TLogContent, object?> _transformation;
     private readonly Type _targetType;
 
-    public LogWrapperDestructuringPolicy(Func<TLogContent, object> transformation)
+    public LogWrapperDestructuringPolicy(Func<TLogContent, object?> transformation)
     {
         _targetType = typeof(TLogWrapper);
         _transformation = transformation;

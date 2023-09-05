@@ -8,6 +8,7 @@ using Serilog.WebApi.Controllers.WeatherForecast.Mediatr;
 using Serilog.WebApi.Controllers.WeatherForecast.LogClasses;
 using Serilog.WebApi.InterchangeContext.Extensions;
 using Serilog.WebApi.Controllers.WeatherForecast.Extensions;
+using MediatR;
 
 var builder = WebApplication.CreateBuilder(args);
 
