@@ -6,24 +6,29 @@ namespace Serilog.WebApi.Serilog.Loggers;
 public class DataExchangeLogger<TCaller> : IDataExchangeLogger<TCaller>
 {
     private readonly ILogger<TCaller> _logger;
-    private readonly IInterchangeContext _interchangeContext;
+    private readonly IInterchangeContextAccessor _interchangeContextAccessor;
 
-    public DataExchangeLogger(ILogger<TCaller> logger, IInterchangeContext interchangeContext)
+    public DataExchangeLogger(ILogger<TCaller> logger, IInterchangeContextAccessor interchangeContextAccessor)
     {
         _logger = logger;
-        _interchangeContext = interchangeContext;
+        _interchangeContextAccessor = interchangeContextAccessor;
     }
 
     public async Task LogInformation<TLogContent>(TLogContent logContent, CancellationToken cancellationToken)
     {
         using (_logger.BeginScope("{IsDataExchangeLog}", true))
         {
-            var interchangeContextData = new Dictionary<string, object?>() 
-            { 
-                { "OperationType", _interchangeContext.OpType }, 
-                { "Id", _interchangeContext.Id }, 
-                { "Properties", (await _interchangeContext.GetPropertiesForContentLog(cancellationToken)).ToDictionary(p => p.Name, p => p.Value) } 
-            };
+            var interchangeContext = _interchangeContextAccessor.InterchangeContext;
+            Dictionary<string, object?>? interchangeContextData = null;
+            if (interchangeContext is not null)
+            {
+                interchangeContextData = new Dictionary<string, object?>()
+                {
+                    { "OperationType", interchangeContext.OpType },
+                    { "Id", interchangeContext.Id },
+                    { "Properties", (await interchangeContext.GetPropertiesForContentLog(cancellationToken)).ToDictionary(p => p.Name, p => p.Value) }
+                };
+            }
             using (_logger.BeginScope(new Dictionary<string, object?>() { { "@InterchangeContext", interchangeContextData } }))
             {
                 _logger.LogInformation("{@LogContent}", new DataExchangeLogWrapper<TLogContent>(logContent));

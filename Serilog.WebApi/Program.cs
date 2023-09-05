@@ -10,6 +10,7 @@ using Serilog.WebApi.Controllers.WeatherForecast.Mediatr;
 using Serilog.WebApi.Controllers.WeatherForecast.LogClasses;
 using Serilog.WebApi.InterchangeContext.Extensions;
 using Serilog.WebApi.Controllers.WeatherForecast.Extensions;
+using Serilog.WebApi.ServiceStore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,7 +25,9 @@ builder.AddSerilogLoggers((ctx, lc) =>
     .Destructure.ByWrappingAndTransforming<ArchiveLogWrapper<SampleMessage>, SampleMessage>(x => x.ToArchiveLog());
 });
 builder.Services.AddTransient(typeof(IDataExchangeLogger<>), typeof(DataExchangeLogger<>));
-builder.Services.AddSingleton<IInterchangeContext, InterchangeContext>();
+builder.Services.AddSingleton<IInterchangeContextAccessor, InterchangeContextAccessor>();
+builder.Services.AddScoped<IInterchangeContext, InterchangeContext>();
+builder.Services.AddScoped<IServiceStore, InterchangeContextServiceStore>();
 builder.Services.AddPropertyPopulator<PostCommandPopulator>();
 builder.Services.AddPropertyPopulator<WeatherForecastDtoArrayPopulator>();
 
@@ -35,9 +38,10 @@ builder.Services.AddControllers();
 builder.Services.AddMediatR(c =>
 {
     //order is important!!
-    c.AddInterchangeContextBehaviorForRequest();
+    c.AddInterchangeContextFactoryBehavior();
+    c.AddInterchangeContextPopulateRequestPropertiesBehavior();
     c.AddDataExchangeLoggerBehavior();
-    c.AddInterchangeContextBehaviorForResponse();
+    c.AddInterchangeContextPopulateResponsePropertiesBehavior();
 
     //AddMediatR method validates that at least one assembly has been passed on which it will apply a scan looking for e.g. handlers.
     //Since we must pass an assembly, but at the same time we want to avoid that all handlers in your assembly get found, we can pass any other assembly that doesn't contain any handlers.

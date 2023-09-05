@@ -15,13 +15,6 @@ public class GetQueryHandler : IRequestHandler<GetQuery, WeatherForecastDto[]>
         "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
     };
 
-    private readonly IInterchangeContext _interchangeContext;
-
-    public GetQueryHandler(IInterchangeContext interchangeContext)
-    {
-        _interchangeContext = interchangeContext;
-    }
-
     public Task<WeatherForecastDto[]> Handle(GetQuery request, CancellationToken cancellationToken)
     {
         //throw new InvalidOperationException("I want to log an exception");
