@@ -1,4 +1,5 @@
-﻿using Serilog.WebApi.InterchangeContext.Services;
+﻿using Microsoft.Extensions.DependencyInjection.Extensions;
+using Serilog.WebApi.InterchangeContext.Services;
 using Serilog.WebApi.ServiceStore;
 
 namespace Serilog.WebApi.InterchangeContext.Extensions;
@@ -24,7 +25,7 @@ public static class ServiceCollectionExtensions
     {
         services.AddSingleton<IInterchangeContextAccessor, InterchangeContextAccessor>();
         services.AddScoped<IInterchangeContext, Services.InterchangeContext>();
-        services.AddScoped<IServiceStore, ServiceStore.ServiceStore>();
+        services.TryAddScoped<IServiceStore, ServiceStore.ServiceStore>();
         return services;
     }
 }
