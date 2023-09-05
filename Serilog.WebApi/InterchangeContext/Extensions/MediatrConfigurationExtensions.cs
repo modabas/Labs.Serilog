@@ -1,6 +1,7 @@
 ﻿using MediatR;
+using Serilog.WebApi.InterchangeContext.Mediatr;
 
-namespace Serilog.WebApi.InterchangeContext.Mediatr;
+namespace Serilog.WebApi.InterchangeContext.Extensions;
 
 public static class MediatrConfigurationExtensions
 {
@@ -19,12 +20,6 @@ public static class MediatrConfigurationExtensions
     public static MediatRServiceConfiguration AddInterchangeContextPopulateResponsePropertiesBehavior(this MediatRServiceConfiguration configuration)
     {
         configuration.AddBehavior(typeof(IPipelineBehavior<,>), typeof(InterchangeContextPopulateResponsePropertiesBehavior<,>));
-        return configuration;
-    }
-
-    public static MediatRServiceConfiguration AddDataExchangeLoggerBehavior(this MediatRServiceConfiguration configuration)
-    {
-        configuration.AddBehavior(typeof(IPipelineBehavior<,>), typeof(DataExchangeLoggerBehavior<,>));
         return configuration;
     }
 }

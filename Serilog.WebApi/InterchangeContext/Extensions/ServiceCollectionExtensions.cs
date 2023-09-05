@@ -1,8 +1,9 @@
 ﻿using Serilog.WebApi.InterchangeContext.Services;
+using Serilog.WebApi.ServiceStore;
 
 namespace Serilog.WebApi.InterchangeContext.Extensions;
 
-public static class ContextExtensions
+public static class ServiceCollectionExtensions
 {
     public static IServiceCollection AddPropertyPopulator<TPopulator>(this IServiceCollection services, ServiceLifetime lifetime = ServiceLifetime.Scoped) where TPopulator : class
     {
@@ -16,6 +17,14 @@ public static class ContextExtensions
         Type type2 = type!.GetGenericArguments().First();
         Type serviceType = typeof(IInterchangeContextPropertyPopulator<>).MakeGenericType(type2);
         services.Add(new ServiceDescriptor(serviceType, typeFromHandle, lifetime));
+        return services;
+    }
+
+    public static IServiceCollection AddInterchangeContext(this IServiceCollection services)
+    {
+        services.AddSingleton<IInterchangeContextAccessor, InterchangeContextAccessor>();
+        services.AddScoped<IInterchangeContext, Services.InterchangeContext>();
+        services.AddScoped<IServiceStore, InterchangeContextServiceStore>();
         return services;
     }
 }
