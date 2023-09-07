@@ -26,6 +26,7 @@ public class DataExchangeLogger<TCaller> : IDataExchangeLogger<TCaller>
                 {
                     { "OperationType", interchangeContext.OpType },
                     { "Id", interchangeContext.Id },
+                    { "CurrentStep", interchangeContext.CurrentStep },
                     { "Properties", (await interchangeContext.GetPropertiesForContentLog(cancellationToken)).ToDictionary(p => p.Name, p => p.Value) }
                 };
             }

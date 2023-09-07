@@ -29,6 +29,8 @@ public class InterchangeContextAccessor : IInterchangeContextAccessor
         }
     }
 
+    public bool IsInitialized => InterchangeContext is not null;
+
     private class ContextHolder
     {
         public IInterchangeContext? WrappedObject;

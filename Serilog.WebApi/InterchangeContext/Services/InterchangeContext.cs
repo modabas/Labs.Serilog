@@ -9,16 +9,18 @@ public class InterchangeContext : IInterchangeContext
     public string Id { get; set; } = string.Empty;
     public string OpType { get; set; } = string.Empty;
     public DateTimeOffset CreatedAt { get; } = DateTimeOffset.UtcNow;
+    public string CurrentStep { get; set; } = string.Empty;
 
     public IServiceProvider Services => _serviceStore.ServiceProvider;
 
     public Dictionary<string, ContextProperty> PropertyBag = new();
     private readonly IServiceStore _serviceStore;
 
-    public InterchangeContext(IServiceStore serviceStore)
+    public InterchangeContext(IServiceStore serviceStore, 
+        IInterchangeContextIdResolver idResolver)
     {
         _serviceStore = serviceStore;
-        Id = GetInterchangeId();
+        Id = idResolver.ResolveId();
     }
 
     public Task SetProperty(ContextProperty property, CancellationToken cancellationToken)
@@ -32,10 +34,5 @@ public class InterchangeContext : IInterchangeContext
         //Null checked in CheckMessageContextCreated
         var ret = PropertyBag.Where(p => p.Value.WriteToContentLog == true).Select(p => p.Value).ToList().AsReadOnly();
         return Task.FromResult<IEnumerable<ContextProperty>>(ret);
-    }
-
-    private string GetInterchangeId()
-    {
-        return Activity.Current?.Id ?? Guid.NewGuid().ToString();
     }
 }
