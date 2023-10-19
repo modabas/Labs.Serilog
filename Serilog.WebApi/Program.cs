@@ -2,14 +2,15 @@ using Serilog.WrapAndTransform;
 using Serilog.WebApi.Controllers.WeatherForecast.Dto;
 using Serilog.WebApi.Controllers.WeatherForecast.Mediatr;
 using Serilog.WebApi.Controllers.WeatherForecast.LogClasses;
-using Serilog.WebApi.InterchangeContext.Extensions;
 using Serilog.WebApi.Controllers.WeatherForecast.Extensions;
-using MediatR;
 using Serilog.WebApi.Serilog.DataExchangeLogger.Extensions;
 using Serilog.WebApi.Serilog.DataExchangeLogger.Loggers;
 using Serilog.WebApi.Serilog.DataExchangeLogger.Wrappers;
-using Serilog.WebApi.Web.InterchangeContext.Filters;
 using Serilog.WebApi.Controllers.WeatherForecast.ContextPopulators;
+using Serilog.WebApi.Web.DataExchangeLogger.Filters;
+using Serilog.WebApi.InterchangeContext.PropertyPopulator.Extensions;
+using Serilog.WebApi.InterchangeContext.Accessor.Extensions;
+using Serilog.WebApi.Web.InterchangeContext.Accessor.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -23,7 +24,7 @@ builder.AddSerilogLoggers((ctx, lc) =>
     .Destructure.ByTransformingWrapped<DataExchangeLogWrapper<SampleMessage>, SampleMessage>(x => x.ToDataExchangeLog());
 });
 builder.Services.AddTransient(typeof(IDataExchangeLogger<>), typeof(DataExchangeLogger<>));
-builder.Services.AddInterchangeContext();
+builder.Services.AddInterchangeContextAccessor();
 builder.Services.AddPropertyPopulator<PostCommandPopulator>();
 builder.Services.AddPropertyPopulator<WeatherForecastDtoArrayPopulator>();
 

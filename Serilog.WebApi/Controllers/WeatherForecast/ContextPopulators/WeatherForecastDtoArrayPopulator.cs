@@ -1,6 +1,6 @@
 ﻿using Serilog.WebApi.Controllers.WeatherForecast.Dto;
 using Serilog.WebApi.Controllers.WeatherForecast.LogClasses;
-using Serilog.WebApi.InterchangeContext.Services;
+using Serilog.WebApi.InterchangeContext.PropertyPopulator.Services;
 
 namespace Serilog.WebApi.Controllers.WeatherForecast.ContextPopulators;
 

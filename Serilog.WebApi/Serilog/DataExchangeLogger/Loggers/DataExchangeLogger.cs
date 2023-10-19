@@ -1,9 +1,6 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
-using Serilog.Context;
-using Serilog.WebApi.InterchangeContext.Services;
+﻿using Serilog.WebApi.InterchangeContext.Accessor.Services;
 using Serilog.WebApi.Serilog.DataExchangeLogger.Dto;
 using Serilog.WebApi.Serilog.DataExchangeLogger.Wrappers;
-using System.Threading;
 
 namespace Serilog.WebApi.Serilog.DataExchangeLogger.Loggers;
 

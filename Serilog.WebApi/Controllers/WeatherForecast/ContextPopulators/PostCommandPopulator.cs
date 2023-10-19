@@ -1,5 +1,5 @@
 ﻿using Serilog.WebApi.Controllers.WeatherForecast.Mediatr;
-using Serilog.WebApi.InterchangeContext.Services;
+using Serilog.WebApi.InterchangeContext.PropertyPopulator.Services;
 
 namespace Serilog.WebApi.Controllers.WeatherForecast.ContextPopulators;
 
