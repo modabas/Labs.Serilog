@@ -5,7 +5,7 @@ namespace Serilog.WebApi.Serilog.DataExchangeLogger.Mediatr;
 
 //Marker class for IDataExchangeLogger caller
 public class DataExchangeLoggerBehavior { }
-public class DataExchangeLoggerBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : notnull
+public class DataExchangeLoggerBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : IDataExchangeRequest
 {
     private readonly IDataExchangeLogger<DataExchangeLoggerBehavior> _logger;
 

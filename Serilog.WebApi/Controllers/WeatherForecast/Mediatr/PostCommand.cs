@@ -1,9 +1,10 @@
 ﻿using MediatR;
 using Serilog.WebApi.Controllers.WeatherForecast.Dto;
+using Serilog.WebApi.Serilog.DataExchangeLogger.Mediatr;
 
 namespace Serilog.WebApi.Controllers.WeatherForecast.Mediatr;
 
-public record PostCommand(PostWeatherForecastRequest Request) : IRequest
+public record PostCommand(PostWeatherForecastRequest Request) : IRequest, IDataExchangeRequest
 {
 }
 
