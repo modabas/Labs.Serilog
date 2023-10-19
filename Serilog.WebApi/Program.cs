@@ -18,9 +18,9 @@ var builder = WebApplication.CreateBuilder(args);
 builder.AddSerilogLoggers((ctx, lc) =>
 {
     lc
-    .Destructure.ByWrappingAndTransforming<DataExchangeLogWrapper<WeatherForecastDto[]>, WeatherForecastDto[]>(x => x.ToDataExchangeLog())
-    .Destructure.ByWrappingAndTransforming<DataExchangeLogWrapper<PostCommand>, PostCommand>(x => x.ToDataExchangeLog())
-    .Destructure.ByWrappingAndTransforming<DataExchangeLogWrapper<SampleMessage>, SampleMessage>(x => x.ToDataExchangeLog());
+    .Destructure.ByTransformingWrapped<DataExchangeLogWrapper<WeatherForecastDto[]>, WeatherForecastDto[]>(x => x.ToDataExchangeLog())
+    .Destructure.ByTransformingWrapped<DataExchangeLogWrapper<PostCommand>, PostCommand>(x => x.ToDataExchangeLog())
+    .Destructure.ByTransformingWrapped<DataExchangeLogWrapper<SampleMessage>, SampleMessage>(x => x.ToDataExchangeLog());
 });
 builder.Services.AddTransient(typeof(IDataExchangeLogger<>), typeof(DataExchangeLogger<>));
 builder.Services.AddInterchangeContext();

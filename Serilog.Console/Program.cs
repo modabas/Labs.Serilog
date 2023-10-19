@@ -18,8 +18,8 @@ Log.Logger = new LoggerConfiguration()
         .WriteTo.Console(formatter: new CompactJsonFormatter(new JsonValueFormatter(null))))
     .WriteTo.Logger(c => c.Filter.ByIncludingOnly(Matching.WithProperty("IsArchiveLog"))
         .WriteTo.File(new CompactJsonFormatter(new JsonValueFormatter(null)), "compact_logs.json"))
-    .Destructure.ByWrappingAndTransforming<AuditLogWrapper<SampleMessage>, SampleMessage>(x => x.ToAuditLog())
-    .Destructure.ByWrappingAndTransforming<ArchiveLogWrapper<SampleMessage>, SampleMessage>(x => x.ToArchiveLog())
+    .Destructure.ByTransformingWrapped<AuditLogWrapper<SampleMessage>, SampleMessage>(x => x.ToAuditLog())
+    .Destructure.ByTransformingWrapped<ArchiveLogWrapper<SampleMessage>, SampleMessage>(x => x.ToArchiveLog())
     .CreateLogger();
 
 
