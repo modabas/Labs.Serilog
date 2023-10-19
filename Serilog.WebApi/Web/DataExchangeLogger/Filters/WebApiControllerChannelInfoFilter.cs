@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Primitives;
-using Serilog.WebApi.Serilog.DataExchangeLogger.Loggers;
+using Serilog.WebApi.DataExchangeLogger.Loggers;
 using Serilog.WebApi.Web.DataExchangeLogger.Dto;
 using Serilog.WebApi.Web.DataExchangeLogger.Extensions;
 using System.Net;

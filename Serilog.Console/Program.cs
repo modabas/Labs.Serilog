@@ -5,7 +5,7 @@ using Serilog.Console;
 using Serilog.Filters;
 using Serilog.Formatting.Compact;
 using Serilog.Formatting.Json;
-using Serilog.WrapAndTransform;
+using Serilog.WrapAndTransform.Destructuring;
 
 var outputTemplate = "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} "+
     "[{Level:u3}] {Properties:lj} {Message:lj}{NewLine}{Exception}";

@@ -1,4 +1,4 @@
-﻿using Serilog.WebApi.Serilog.DataExchangeLogger.Dto;
+﻿using Serilog.WebApi.DataExchangeLogger.Dto;
 using System.Text.Json.Serialization;
 
 namespace Serilog.WebApi.Web.DataExchangeLogger.Dto;

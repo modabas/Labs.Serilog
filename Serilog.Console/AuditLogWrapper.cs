@@ -1,4 +1,4 @@
-﻿using Serilog.WrapAndTransform;
+﻿using Serilog.WrapAndTransform.Destructuring;
 
 namespace Serilog.Console;
 

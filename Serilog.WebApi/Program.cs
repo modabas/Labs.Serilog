@@ -1,16 +1,16 @@
-using Serilog.WrapAndTransform;
-using Serilog.WebApi.Controllers.WeatherForecast.Dto;
-using Serilog.WebApi.Controllers.WeatherForecast.Mediatr;
-using Serilog.WebApi.Controllers.WeatherForecast.LogClasses;
-using Serilog.WebApi.Controllers.WeatherForecast.Extensions;
-using Serilog.WebApi.Serilog.DataExchangeLogger.Extensions;
-using Serilog.WebApi.Serilog.DataExchangeLogger.Loggers;
-using Serilog.WebApi.Serilog.DataExchangeLogger.Wrappers;
-using Serilog.WebApi.Controllers.WeatherForecast.ContextPopulators;
 using Serilog.WebApi.Web.DataExchangeLogger.Filters;
 using Serilog.WebApi.InterchangeContext.PropertyPopulator.Extensions;
 using Serilog.WebApi.InterchangeContext.Accessor.Extensions;
 using Serilog.WebApi.Web.InterchangeContext.Accessor.Filters;
+using Serilog.WebApi.Web.Controllers.WeatherForecast.ContextPopulators;
+using Serilog.WebApi.Web.Controllers.WeatherForecast.Dto;
+using Serilog.WebApi.Web.Controllers.WeatherForecast.Extensions;
+using Serilog.WebApi.Web.Controllers.WeatherForecast.LogClasses;
+using Serilog.WebApi.Web.Controllers.WeatherForecast.Mediatr;
+using Serilog.WebApi.DataExchangeLogger.Extensions;
+using Serilog.WebApi.DataExchangeLogger.Loggers;
+using Serilog.WebApi.DataExchangeLogger.Wrappers;
+using Serilog.WrapAndTransform.Destructuring;
 
 var builder = WebApplication.CreateBuilder(args);
 
