@@ -7,7 +7,7 @@ namespace Serilog.WebApi.InterchangeContext.Services;
 public class InterchangeContext : IInterchangeContext
 {
     public string Id { get; set; } = string.Empty;
-    public string OpType { get; set; } = string.Empty;
+    public string Name { get; set; } = string.Empty;
     public DateTimeOffset CreatedAt { get; } = DateTimeOffset.UtcNow;
     public string CurrentStep { get; set; } = string.Empty;
 

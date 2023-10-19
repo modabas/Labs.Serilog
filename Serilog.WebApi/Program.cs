@@ -9,6 +9,7 @@ using MediatR;
 using Serilog.WebApi.Serilog.DataExchangeLogger.Extensions;
 using Serilog.WebApi.Serilog.DataExchangeLogger.Loggers;
 using Serilog.WebApi.Serilog.DataExchangeLogger.Wrappers;
+using Serilog.WebApi.Web.InterchangeContext.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -28,7 +29,11 @@ builder.Services.AddPropertyPopulator<WeatherForecastDtoArrayPopulator>();
 
 builder.Services.AddHttpContextAccessor();
 
-builder.Services.AddControllers();
+builder.Services.AddControllers(options =>
+{
+    options.Filters.Add<InterchangeContextFactoryFilter>();
+    options.Filters.Add<WebApiControllerChannelInfoFilter>();
+});
 
 builder.Services.AddMediatR(c =>
 {

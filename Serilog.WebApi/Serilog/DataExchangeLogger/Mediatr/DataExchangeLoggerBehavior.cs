@@ -3,11 +3,13 @@ using Serilog.WebApi.Serilog.DataExchangeLogger.Loggers;
 
 namespace Serilog.WebApi.Serilog.DataExchangeLogger.Mediatr;
 
+//Marker class for IDataExchangeLogger caller
+public class DataExchangeLoggerBehavior { }
 public class DataExchangeLoggerBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : notnull
 {
-    private readonly IDataExchangeLogger<TRequest> _logger;
+    private readonly IDataExchangeLogger<DataExchangeLoggerBehavior> _logger;
 
-    public DataExchangeLoggerBehavior(IDataExchangeLogger<TRequest> logger)
+    public DataExchangeLoggerBehavior(IDataExchangeLogger<DataExchangeLoggerBehavior> logger)
     {
         _logger = logger;
     }
@@ -16,14 +18,14 @@ public class DataExchangeLoggerBehavior<TRequest, TResponse> : IPipelineBehavior
     {
         try
         {
-            await _logger.LogInformation(request, cancellationToken);
+            await _logger.LogContent(request, cancellationToken);
             var response = await next();
-            await _logger.LogInformation(response, cancellationToken);
+            await _logger.LogContent(response, cancellationToken);
             return response;
         }
         catch (Exception ex)
         {
-            await _logger.LogError(ex, "DataExchangeLoggerBehavior");
+            await _logger.LogException(ex, cancellationToken, "DataExchangeLoggerBehavior");
             throw;
         }
     }

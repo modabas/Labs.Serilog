@@ -18,7 +18,7 @@ public class InterchangeContextFactoryBehavior<TRequest, TResponse> : IPipelineB
     {
         if (!_interchangeContextAccessor.IsInitialized)
         {
-            _interchangeContext.OpType = typeof(TRequest).FullName ?? string.Empty;
+            _interchangeContext.Name = typeof(TRequest).FullName ?? string.Empty;
             _interchangeContextAccessor.InterchangeContext = _interchangeContext;
         }
         return await next();
