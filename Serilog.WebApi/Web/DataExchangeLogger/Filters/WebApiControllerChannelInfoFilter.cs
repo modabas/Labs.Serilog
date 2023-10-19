@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.Extensions.Primitives;
 using Serilog.WebApi.DataExchangeLogger.Loggers;
 using Serilog.WebApi.Web.DataExchangeLogger.Dto;
-using Serilog.WebApi.Web.DataExchangeLogger.Extensions;
+using Serilog.WebApi.Web.Extensions;
 using System.Net;
 using System.Text.RegularExpressions;
 

@@ -1,6 +1,6 @@
 ﻿using Microsoft.Extensions.Primitives;
 
-namespace Serilog.WebApi.Web.DataExchangeLogger.Extensions;
+namespace Serilog.WebApi.Web.Extensions;
 
 public static class HttpContextExtensions
 {
