@@ -32,7 +32,7 @@ public class InterchangeContextPopulateResponsePropertiesBehavior<TRequest, TRes
         return Activity.Current?.Id ?? context.TraceIdentifier;
     }
 
-    private async Task PopulateResponseProperties(IInterchangeContext httpContext, TResponse instance, CancellationToken cancellationToken)
+    private async Task PopulateResponseProperties(IInterchangeContext interchangeContext, TResponse instance, CancellationToken cancellationToken)
     {
         if (instance is null)
             return;
@@ -43,7 +43,7 @@ public class InterchangeContextPopulateResponsePropertiesBehavior<TRequest, TRes
         {
             return;
         }
-        var populator = httpContext.Services.GetService(populatorType);
+        var populator = interchangeContext.Services.GetService(populatorType);
         if (populator is null)
         {
             return;
@@ -69,7 +69,7 @@ public class InterchangeContextPopulateResponsePropertiesBehavior<TRequest, TRes
         }
         foreach (var property in await getPropertiesTask)
         {
-            await httpContext.SetProperty(property, cancellationToken);
+            await interchangeContext.SetProperty(property, cancellationToken);
         }
     }
 }

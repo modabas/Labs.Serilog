@@ -2,7 +2,7 @@
 using Serilog.WebApi.Controllers.WeatherForecast.LogClasses;
 using Serilog.WebApi.InterchangeContext.Services;
 
-namespace Serilog.WebApi.Controllers.WeatherForecast.ContextPublishers;
+namespace Serilog.WebApi.Controllers.WeatherForecast.ContextPopulators;
 
 public class WeatherForecastDtoArrayPopulator : AbstractPropertyPopulator<WeatherForecastDto[]>
 {
