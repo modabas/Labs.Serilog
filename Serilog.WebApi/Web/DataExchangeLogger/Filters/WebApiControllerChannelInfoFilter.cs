@@ -11,7 +11,7 @@ using System.Text.RegularExpressions;
 
 namespace Serilog.WebApi.Web.DataExchangeLogger.Filters;
 
-public class WebApiControllerChannelInfoFilter : IAsyncActionFilter
+public partial class WebApiControllerChannelInfoFilter : IAsyncActionFilter
 {
     private readonly IDataExchangeLogger<WebApiControllerChannelInfoFilter> _logger;
 
@@ -98,10 +98,13 @@ public class WebApiControllerChannelInfoFilter : IAsyncActionFilter
     private static string GetStatusCodeString(int statusCode)
     {
         var name = ((HttpStatusCode)statusCode).ToString();
-        string[] words = Regex.Matches(name, "(^[a-z]+|[A-Z]+(?![a-z])|[A-Z][a-z]+)")
+        string[] words = _httpStatusNameRegex().Matches(name)
             .OfType<Match>()
             .Select(m => m.Value)
             .ToArray();
         return words.Length == 0 ? name : string.Join(" ", words);
     }
+
+    [GeneratedRegex("(^[a-z]+|[A-Z]+(?![a-z])|[A-Z][a-z]+)")]
+    private static partial Regex _httpStatusNameRegex();
 }

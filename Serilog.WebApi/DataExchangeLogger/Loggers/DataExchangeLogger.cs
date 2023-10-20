@@ -7,9 +7,9 @@ namespace Serilog.WebApi.DataExchangeLogger.Loggers;
 public class DataExchangeLogger<TCaller> : IDataExchangeLogger<TCaller>
 {
     private readonly ILogger<TCaller> _logger;
-    private readonly IInterchangeContextAccessor _interchangeContextAccessor;
+    private readonly IInterchangeContextAccessor? _interchangeContextAccessor;
 
-    public DataExchangeLogger(ILogger<TCaller> logger, IInterchangeContextAccessor interchangeContextAccessor)
+    public DataExchangeLogger(ILogger<TCaller> logger, IInterchangeContextAccessor? interchangeContextAccessor = null)
     {
         _logger = logger;
         _interchangeContextAccessor = interchangeContextAccessor;
@@ -19,7 +19,7 @@ public class DataExchangeLogger<TCaller> : IDataExchangeLogger<TCaller>
     {
         using (_logger.BeginScope("{IsDataExchangeLog}, {LogType}", true, "Content"))
         {
-            var interchangeContext = _interchangeContextAccessor.InterchangeContext;
+            var interchangeContext = _interchangeContextAccessor?.InterchangeContext;
             Dictionary<string, object?>? interchangeContextData = null;
             if (interchangeContext is not null)
             {
@@ -42,7 +42,7 @@ public class DataExchangeLogger<TCaller> : IDataExchangeLogger<TCaller>
     {
         using (_logger.BeginScope("{IsDataExchangeLog}, {LogType}", true, "Exception"))
         {
-            var interchangeContext = _interchangeContextAccessor.InterchangeContext;
+            var interchangeContext = _interchangeContextAccessor?.InterchangeContext;
             Dictionary<string, object?>? interchangeContextData = null;
             if (interchangeContext is not null)
             {
@@ -65,7 +65,7 @@ public class DataExchangeLogger<TCaller> : IDataExchangeLogger<TCaller>
     {
         using (_logger.BeginScope("{IsDataExchangeLog}, {LogType}", true, "ChannelInfo"))
         {
-            var interchangeContext = _interchangeContextAccessor.InterchangeContext;
+            var interchangeContext = _interchangeContextAccessor?.InterchangeContext;
             Dictionary<string, object?>? interchangeContextData = null;
             if (interchangeContext is not null)
             {
