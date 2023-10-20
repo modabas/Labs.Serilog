@@ -32,6 +32,7 @@ builder.Services.AddHttpContextAccessor();
 
 builder.Services.AddControllers(options =>
 {
+    //Interchange context initiation and web api channel info logger
     options.Filters.Add<InterchangeContextFactoryFilter>();
     options.Filters.Add<WebApiControllerChannelInfoFilter>();
 });
