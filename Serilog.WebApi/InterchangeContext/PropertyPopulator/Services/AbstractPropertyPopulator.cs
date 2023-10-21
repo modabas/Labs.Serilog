@@ -8,12 +8,12 @@ public abstract class AbstractPropertyPopulator<T> : IInterchangeContextProperty
 
     public abstract Task SetProperties(T instance, CancellationToken cancellationToken);
 
-    public Task<IEnumerable<ContextProperty>> GetProperties(T instance, CancellationToken cancellationToken)
+    public Task<IEnumerable<ContextProperty>> GetProperties(CancellationToken cancellationToken)
     {
         return Task.FromResult(_properties.Values.AsEnumerable());
     }
 
-    public ContextProperty SetProperty(string name, object? value, bool writeToContentLog = true)
+    protected ContextProperty SetProperty(string name, object? value, bool writeToContentLog = true)
     {
         ArgumentException.ThrowIfNullOrEmpty(name, nameof(name));
 
